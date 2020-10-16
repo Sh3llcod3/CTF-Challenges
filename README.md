@@ -1,7 +1,7 @@
 ## CTF-Challenges
 
 This repository contains all the challenges that I have created, organised by the name of the CTF it featured in.
-Most (if not all) of the challenges should include a __briefing__, a __hint__ and a __writeup__.
+All of the challenges should include a __briefing__, a __hint__ and a __writeup__.
 
 Feel free to use these challenges for practice purposes or in your own CTF if you wish,
 I will be happy to answer questions regarding them. For some of them the flags are hardcoded.
