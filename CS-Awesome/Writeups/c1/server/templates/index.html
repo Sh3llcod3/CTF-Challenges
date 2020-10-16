@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#272727" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@3.0.0/dist/material-components-web.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css">
+  <script src="https://unpkg.com/material-components-web@3.0.0/dist/material-components-web.min.js"></script>
+  <title>Store | Main Catalog</title>
+  <link rel="icon" href="./static/favicon.png">
+  <link rel="stylesheet" href="./static/styles.min.css" type="text/css">
+</head>
+<body class="mdc-typography">
+  <header class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <button onclick="window.history.back()" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button">arrow_back</button>
+        <span class="mdc-top-app-bar__title">Store</span>
+      </section>
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+        <span class="mdc-top-app-bar__action-item mdc-typography" id="basket-price" aria-label="Basket Total">$0.00</span>
+        <button onclick="window.location.reload(false);" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" title="Refresh Basket" aria-label="Refresh Basket">refresh</button>
+        <button onclick="attemptCheckout();" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" title="Attempt Checkout" aria-label="Checkout">shop_two</button>
+        <button onclick="doAbsolutelyNothing();" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Print this page">print</button>
+        <button onclick="doAbsolutelyNothing();" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Bookmark this page">bookmark</button>
+      </section>
+    </div>
+  </header>
+  <div class="blurred_bg"></div>
+  <div class="main_page_body mdc-top-app-bar--short-fixed-adjust">
+    <div class="mdc-dialog"
+         role="alertdialog"
+         aria-modal="true"
+         aria-labelledby="item-dialog-title"
+         aria-describedby="item-dialog-content">
+      <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+          <h2 class="mdc-dialog__title" id="item-dialog-title">Item Information</h2>
+          <div class="mdc-dialog__content" id="item-dialog-content">
+            Dialog body text.
+          </div>
+          <footer class="mdc-dialog__actions">
+            <button type="button" class="mdc-button mdc-button--outlined mdc-dialog__button" data-mdc-dialog-action="yes">
+              <span class="mdc-button__label">Close</span>
+            </button>
+          </footer>
+        </div>
+      </div>
+      <div class="mdc-dialog__scrim"></div>
+    </div>
+    <div class="mdc-layout-grid">
+      <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--align-middle mdc-layout-grid__cell--span-12-desktop mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-8-tablet">
+          <div class="mdc-list-group">
+            <h3 class="mdc-list-group__subheader">Cartridges</h3>
+            <ul class="mdc-list mdc-list--two-line">
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/38Special.png') #b71030 center/cover no-repeat; background-size: 135% auto !important;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">.38 Special</span>
+                  <span class="mdc-list-item__secondary-text">Item 1 - $25 (24 pieces)</span>
+                </span>
+                <span onclick="addToBasket(25);" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/45ACP.png') #b71030 center/cover no-repeat; background-size: auto 100% !important;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">.45 ACP</span>
+                  <span class="mdc-list-item__secondary-text">Item 2 - $15 (12 pieces)</span>
+                </span>
+                <span onclick="addToBasket(15);" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/50AE.png') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">.50 AE</span>
+                  <span class="mdc-list-item__secondary-text">Item 3 - $45 (7 pieces)</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-1">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-1"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-1">+$5 Full Metal Jacket</label>
+                  </div>
+                </div>
+                <span onclick="addToBasket(45, item_toggle_1);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/12G.png') #b11735 center/cover no-repeat; background-size: 130% auto !important;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">12 Gauge</span>
+                  <span class="mdc-list-item__secondary-text">Item 4 - $35 (6 pieces)</span>
+                </span>
+                <span onclick="addToBasket(35);" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/308Win.png') #b71030 center/cover no-repeat; background-size: 90% auto !important;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">.308 Winchester</span>
+                  <span class="mdc-list-item__secondary-text">Item 5 - $30 (10 pieces)</span>
+                </span>
+                <span onclick="addToBasket(30);" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/338Lapua.png') #b71030 center/cover no-repeat; background-size: 85% auto !important;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">.338 Lapua</span>
+                  <span class="mdc-list-item__secondary-text">Item 6 - $50 (15 pieces)</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-2">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-2"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-2">+$20 Extra Dip</label>
+                  </div>
+                </div>
+                <span onclick="addToBasket(50, item_toggle_2);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/20mm.png') #b71030 center/cover no-repeat; background-size: auto 90% !important;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">20mm</span>
+                  <span class="mdc-list-item__secondary-text">Item 7 - $70 (5 pieces)</span>
+                </span>
+                <span onclick="addToBasket(70);" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/556NATO.png') #088344 center/cover no-repeat; background-size: 85% auto !important;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">5.56x45mm</span>
+                  <span class="mdc-list-item__secondary-text">Item 8 - $25 (1x30 clip)</span>
+                </span>
+                <span onclick="addToBasket(25);" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/9mm.png') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">9mm</span>
+                  <span class="mdc-list-item__secondary-text">Item 9 - $30 (10x3 clips)</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-3">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-3"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-3">+$15 Large Box (60 pieces)</label>
+                  </div>
+                </div>
+                <span onclick="addToBasket(30, item_toggle_3);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/762NATO.png') #b71030 center/cover no-repeat; background-size: 90% auto !important;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">7.62x51mm</span>
+                  <span class="mdc-list-item__secondary-text">Item 10 - $50 (2x30 clips)</span>
+                </span>
+                <span onclick="addToBasket(50);" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">playlist_add</span>
+              </li>
+            </ul>
+            <h3 class="mdc-list-group__subheader">Pistols</h3>
+            <ul class="mdc-list mdc-list--two-line">
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/y2hsGZSVG4E/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">M1911</span>
+                  <span class="mdc-list-item__secondary-text">Item 12 - $150</span>
+                </span>
+                <span onclick="displayDialog('y2hsGZSVG4E');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(150);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/qolpKRLc5P8/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">Beretta 92</span>
+                  <span class="mdc-list-item__secondary-text">Item 15 - $175</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-4">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-4"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-4">+$50 Suppressor Kit</label>
+                  </div>
+                </div>
+                <span onclick="displayDialog('qolpKRLc5P8');" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">info</span>
+                <span onclick="addToBasket(175, item_toggle_4);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/8T_OW9NHJ84/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">Desert Eagle</span>
+                  <span class="mdc-list-item__secondary-text">Item 17 - $300</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-5">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-5"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-5">+$100 Chrome Finish</label>
+                  </div>
+                </div>
+                <span onclick="displayDialog('8T_OW9NHJ84');" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">info</span>
+                <span onclick="addToBasket(300, item_toggle_5);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/qQs7Wonu9NI/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">Magnum Revolver</span>
+                  <span class="mdc-list-item__secondary-text">Item 18 - $225</span>
+                </span>
+                <span onclick="displayDialog('qQs7Wonu9NI');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(225);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/G17.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">Glock 17</span>
+                  <span class="mdc-list-item__secondary-text">Item 21 - $330</span>
+                </span>
+                <span onclick="displayDialog('EKVjMAG4ues');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(330);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+            </ul>
+            <h3 class="mdc-list-group__subheader">Submachine Guns</h3>
+            <ul class="mdc-list mdc-list--two-line">
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/X2Updljxb4I/hqdefault.jpg') #000000 center/cover no-repeat; background-size: 100% auto;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">MP5</span>
+                  <span class="mdc-list-item__secondary-text">Item 25 - $350</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-6">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-6"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-6">+$75 Muzzle Brake</label>
+                  </div>
+                </div>
+                <span onclick="displayDialog('X2Updljxb4I');" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">info</span>
+                <span onclick="addToBasket(350, item_toggle_6);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/YxzZJjDRdeo/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">Uzi</span>
+                  <span class="mdc-list-item__secondary-text">Item 28 - $275</span>
+                </span>
+                <span onclick="displayDialog('YxzZJjDRdeo');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(275);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/FBiIWuQNQHU/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">Thompson</span>
+                  <span class="mdc-list-item__secondary-text">Item 30 - $210</span>
+                </span>
+                <span onclick="displayDialog('FBiIWuQNQHU');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(210);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/ejkHVAgzQ7U/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">P90</span>
+                  <span class="mdc-list-item__secondary-text">Item 35 - $420</span>
+                </span>
+                <span onclick="displayDialog('ejkHVAgzQ7U');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(420);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/tKw14dRiROs/mqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">MP40</span>
+                  <span class="mdc-list-item__secondary-text">Item 38 - $75</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-7">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-7"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-7">+$55 Woodland Camo</label>
+                  </div>
+                </div>
+                <span onclick="displayDialog('tKw14dRiROs');" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">info</span>
+                <span onclick="addToBasket(75, item_toggle_7);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+            </ul>
+            <h3 class="mdc-list-group__subheader">Assault Rifles</h3>
+            <ul class="mdc-list mdc-list--two-line">
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/yh2FGCYC63Q/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">M16</span>
+                  <span class="mdc-list-item__secondary-text">Item 45 - $900</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-8">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-8"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-8">+$60 Cheese Camo</label>
+                  </div>
+                </div>
+                <span onclick="displayDialog('yh2FGCYC63Q');" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">info</span>
+                <span onclick="addToBasket(900, item_toggle_8);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/tiZHgwICPlU/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">AK</span>
+                  <span class="mdc-list-item__secondary-text">Item 47 - $700</span>
+                </span>
+                <span onclick="displayDialog('tiZHgwICPlU');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(700);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/STG44.png') #000000 center/cover no-repeat; background-size: 100% auto;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">Sturmgewehr</span>
+                  <span class="mdc-list-item__secondary-text">Item 48 - $635</span>
+                </span>
+                <span onclick="addToBasket(635);" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">playlist_add</span>
+              </li>
+            </ul>
+            <h3 class="mdc-list-group__subheader">Battle Rifles</h3>
+            <ul class="mdc-list mdc-list--two-line">
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/Q9JoHzlIAqs/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">FN FAL</span>
+                  <span class="mdc-list-item__secondary-text">Item 51 - $490</span>
+                </span>
+                <span onclick="displayDialog('Q9JoHzlIAqs');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(490);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/6HEAA0C6a4Q/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">M1 Garand</span>
+                  <span class="mdc-list-item__secondary-text">Item 56 - $300</span>
+                </span>
+                <span onclick="displayDialog('6HEAA0C6a4Q');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(300);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/OTh4f7ye1IQ/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">M60</span>
+                  <span class="mdc-list-item__secondary-text">Item 58 - $830</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-9">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-9"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-9">+$115 EOTech Holo Sight</label>
+                  </div>
+                </div>
+                <span onclick="displayDialog('OTh4f7ye1IQ');" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">info</span>
+                <span onclick="addToBasket(830, item_toggle_9);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+            </ul>
+            <h3 class="mdc-list-group__subheader">Sniper Rifles</h3>
+            <ul class="mdc-list mdc-list--two-line">
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/4hk_km45lXY/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">Arctic Warfare</span>
+                  <span class="mdc-list-item__secondary-text">Item 60 - $1200</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-10">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-10"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-10">+$450 LRNG Kit (64x, Laser Rangefinder, etc.)</label>
+                  </div>
+                </div>
+                <span onclick="displayDialog('4hk_km45lXY');" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">info</span>
+                <span onclick="addToBasket(1200, item_toggle_10);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+            </ul>
+            <h3 class="mdc-list-group__subheader">Shotguns</h3>
+            <ul class="mdc-list mdc-list--two-line">
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/EY2lWmZN5TQ/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">Double Barrel</span>
+                  <span class="mdc-list-item__secondary-text">Item 63 - $450</span>
+                </span>
+                <span onclick="displayDialog('EY2lWmZN5TQ');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(450);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/EdTflRSBgUE/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">SPAS-12</span>
+                  <span class="mdc-list-item__secondary-text">Item 64 - $670</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-11">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-11"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-11">+$30 Vehicle Hook</label>
+                  </div>
+                </div>
+                <span onclick="displayDialog('EdTflRSBgUE');" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">info</span>
+                <span onclick="addToBasket(670, item_toggle_11);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('./static/SPAS15.png') #b71030 center/cover no-repeat; background-size: 100% auto !important;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">SPAS-15</span>
+                  <span class="mdc-list-item__secondary-text">Item 69 - $780</span>
+                </span>
+                <span onclick="addToBasket(780);" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">playlist_add</span>
+              </li>
+            </ul>
+            <h3 class="mdc-list-group__subheader">Rocket Launchers</h3>
+            <ul class="mdc-list mdc-list--two-line">
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/1HOyLhYUfnA/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">RPG</span>
+                  <span class="mdc-list-item__secondary-text">Item 76 - $850</span>
+                </span>
+                <span onclick="displayDialog('1HOyLhYUfnA');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(850);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+            </ul>
+            <h3 class="mdc-list-group__subheader">Special</h3>
+            <ul class="mdc-list mdc-list--two-line">
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/Ff73iFNF2Lw/hqdefault.jpg') #e0b913 center/cover no-repeat; background-size: 100% auto;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">M134</span>
+                  <span class="mdc-list-item__secondary-text">Item Soda - $2000</span>
+                </span>
+                <div class="mdc-list-item__meta unselectable-text" aria-hidden="true">
+                  <div class="mdc-form-field">
+                    <div class="mdc-checkbox" id="item-toggle-12">
+                      <input type="checkbox"
+                             class="mdc-checkbox__native-control"
+                             id="item-checkbox-12"/>
+                      <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark"
+                             viewBox="0 0 24 24">
+                          <path class="mdc-checkbox__checkmark-path"
+                                fill="none"
+                                d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                      </div>
+                    </div>
+                    <label for="item-checkbox-12">+$350 Large Capacity</label>
+                  </div>
+                </div>
+                <span onclick="displayDialog('Ff73iFNF2Lw');" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">info</span>
+                <span onclick="addToBasket(2000, item_toggle_12);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+              <li class="mdc-list-item" tabindex="0">
+                <span class="mdc-list-item__graphic" style="background: url('https://img.youtube.com/vi/VXYODzR-UKc/hqdefault.jpg') center/cover no-repeat;" aria-hidden="true"></span>
+                <span class="mdc-list-item__text">
+                  <span class="mdc-list-item__primary-text">Bow & Arrow</span>
+                  <span class="mdc-list-item__secondary-text">Item 100 - $60</span>
+                </span>
+                <span onclick="displayDialog('VXYODzR-UKc');" class="mdc-list-item__meta material-icons unselectable-text" aria-hidden="true">info</span>
+                <span onclick="addToBasket(60);" class="mdc-list-item__meta material-icons unselectable-text adjusted_btn_padding" aria-hidden="true">playlist_add</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="mdc-snackbar mdc-snackbar--leading">
+          <div class="mdc-snackbar__surface">
+            <div class="mdc-snackbar__label"
+                 role="status"
+                 aria-live="polite">
+              Snackbar Text.
+            </div>
+            <div class="mdc-snackbar__actions">
+              <button type="button" class="mdc-button mdc-snackbar__action" id="snackbarActionBtnRipple">Action</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./static/script.min.js"></script>
+</body>
+</html>
