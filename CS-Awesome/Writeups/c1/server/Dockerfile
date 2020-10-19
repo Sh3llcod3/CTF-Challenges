@@ -1,3 +1,5 @@
+# This is a basic DockerFile, change and secure it as you see fit.
+# You could also just get Flask & Gunicorn and deploy this on bare metal.
 FROM python:3.9-buster
 
 WORKDIR /app
