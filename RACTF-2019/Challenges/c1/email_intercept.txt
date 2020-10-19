@@ -1,0 +1,7 @@
+Associates,
+
+You know the drill, use https://xor.pw/ as usual.
+
+(b256, md5) 3d434fd71c4652539edb8dea633a9370 ⊻ (b16) 6244424f5a3139734d58597a58323430626b347a550e500028295d3b
+
+Use Memecrypt with what you get.
