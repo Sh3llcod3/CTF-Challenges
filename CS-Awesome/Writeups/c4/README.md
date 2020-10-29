@@ -11,4 +11,4 @@ The tool uses it's custom audio steg algorithm, and to me it doesn't look like b
 
 ### Flag
 
-`elite{d1ff3rent_ph4se5_0f_l1f3}`
+> `elite{d1ff3rent_ph4se5_0f_l1f3}`

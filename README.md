@@ -9,6 +9,8 @@ I will be happy to answer questions regarding them. For some of them the flags a
 Please keep in mind that challenges may need deployment with special instructions or come with additional supporting files.
 Some of these files may be zipped & encrypted, the password will be listed along with the challenge in the "README.txt" files.
 
+> You can use most of the briefs as-is, but you may want to reword some of them and add in certain details.
+
 ## Disclaimer
 
 The quality of any particular challenge is not guaranteed and the difficulty (although subjective) ranges from easy to quite hard.

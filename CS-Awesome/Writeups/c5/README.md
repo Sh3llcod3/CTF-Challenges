@@ -9,4 +9,4 @@ Thus, each packet needs one byte extracted from that header field. Once done, ba
 
 ### Flag
 
-`elite{sl1c3_m3_up_r3al_g0Od}`
+> `elite{sl1c3_m3_up_r3al_g0Od}`

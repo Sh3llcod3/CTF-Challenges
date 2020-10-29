@@ -37,4 +37,4 @@ Listen to what is read out for the flag.
 
 ### Flag
 
-`elite{c4tch_m3_if_y0u_c4n}`
+> `elite{c4tch_m3_if_y0u_c4n}`

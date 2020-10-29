@@ -22,7 +22,7 @@ Hitting checkout with that total in the basket grants a response with the flag.
 
 ### Flag
 
-`elite{B1g_Sm0ke's_Ord3r}`
+> `elite{B1g_Sm0ke's_Ord3r}`
 
 ### Setup Required
 

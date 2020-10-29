@@ -15,5 +15,5 @@ I used sox, its fast and versatile.
 
 ### Flag
 
-`cdctf{M0n5t3rC4T}`
+> `cdctf{M0n5t3rC4T}`
 
